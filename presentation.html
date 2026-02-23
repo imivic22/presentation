@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coordination & Subordination</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            overflow: hidden;
+        }
+        
+        .presentation {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .slide {
+            display: none;
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            padding: 60px;
+            position: relative;
+            overflow-y: auto;
+        }
+        
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            animation: slideIn 0.5s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        h1 {
+            color: #1e3c72;
+            font-size: 3em;
+            margin-bottom: 15px;
+            border-bottom: 4px solid #2a5298;
+            padding-bottom: 15px;
+        }
+        
+        h2 {
+            color: #2a5298;
+            font-size: 2.2em;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #e8eaf6;
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            color: #1e3c72;
+            font-size: 1.6em;
+            margin: 25px 0 15px 0;
+        }
+        
+        h4 {
+            color: #2a5298;
+            font-size: 1.3em;
+            margin: 15px 0 10px 0;
+        }
+        
+        p, li {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 12px;
+            font-family: 'Helvetica', 'Arial', sans-serif;
+        }
+        
+        .subtitle {
+            font-size: 1.4em;
+            color: #555;
+            font-style: italic;
+            margin-bottom: 30px;
+        }
+        
+        .example-box {
+            background: #f5f7fa;
+            border-left: 5px solid #2a5298;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+        }
+        
+        .example-box.correct {
+            border-left-color: #4caf50;
+            background: #f1f8f4;
+        }
+        
+        .example-box.incorrect {
+            border-left-color: #f44336;
+            background: #fff5f5;
+        }
+        
+        .highlight {
+            background: #fff59d;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        
+        .emphasis {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+        
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .column {
+            background: #fafafa;
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .key-point {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            color: #0d47a1;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-size: 1.15em;
+        }
+        
+        .key-point strong {
+            color: #1565c0;
+        }
+        
+        .controls {
+            margin-top: auto;
+            padding-top: 30px;
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+        }
+        
+        button {
+            padding: 12px 30px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 5px;
+            background: #2a5298;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Helvetica', 'Arial', sans-serif;
+        }
+        
+        button:hover {
+            background: #1e3c72;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        ul, ol {
+            margin-left: 40px;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .comparison-table th {
+            background: #2a5298;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-size: 1.2em;
+        }
+        
+        .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 1.1em;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background: #f5f5f5;
+        }
+        
+        .rule-box {
+            background: #fff3e0;
+            border: 2px solid #ff9800;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .rule-box strong {
+            color: #e65100;
+        }
+        
+        blockquote {
+            border-left: 4px solid #2a5298;
+            padding-left: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            color: #555;
+        }
+        
+        .interactive-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .interactive-section h3 {
+            color: white;
+            border-bottom: 2px solid white;
+            padding-bottom: 10px;
+        }
+        
+        .activity-box {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .quiz-option {
+            background: white;
+            color: #333;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .quiz-option:hover {
+            background: #e3f2fd;
+            transform: translateX(5px);
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>Coordination & Subordination</h1>
+            <p class="subtitle">Tools for Shaping Meaning in Writing</p>
+            <blockquote style="font-size: 1.3em; margin-top: 50px;">
+                "Coordination and subordination control emphasis, rhythm, clarity, and persuasion. Skilled writers choose between them based on purpose, not habit."
+            </blockquote>
+            <div style="margin-top: 50px;">
+                <h3>Today's Focus:</h3>
+                <ul>
+                    <li>Understanding coordination and subordination</li>
+                    <li>Learning when to use each one</li>
+                    <li>Mastering parallel structure</li>
+                    <li>Avoiding common mistakes</li>
+                </ul>
+            </div>
+            <div class="controls">
+                <button onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 2: What is Coordination? -->
+        <div class="slide">
+            <h2>What is Coordination?</h2>
+            
+            <p><strong>Coordination</strong> joins elements of <span class="emphasis">equal importance</span>.</p>
+            
+            <h3>The Coordinating Conjunctions: FANBOYS</h3>
+            <div class="two-column">
+                <div class="column">
+                    <ul>
+                        <li><strong>F</strong>or</li>
+                        <li><strong>A</strong>nd</li>
+                        <li><strong>N</strong>or</li>
+                        <li><strong>B</strong>ut</li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <ul>
+                        <li><strong>O</strong>r</li>
+                        <li><strong>Y</strong>et</li>
+                        <li><strong>S</strong>o</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="example-box">
+                I wanted to go to the party, <span class="highlight">but</span> I had too much homework.
+            </div>
+            
+            <div class="key-point">
+                <strong>Key Idea:</strong> Coordination says "these ideas matter equally."
+            </div>
+            
+            <div class="controls">
+                <button onclick="prevSlide()">← Back</button>
+                <button onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 3: What Can Be Coordinated -->
+        <div class="slide">
+            <h2>What Can Be Coordinated?</h2>
+            
+            <h3>1. Words</h3>
+            <div class="example-box">
+                She is smart <span class="highlight">and</span> funny.
+            </div>
+            
+            <h3>2. Phrases</h3>
+            <div class="example-box">
+                You can take a taxi <span class="highlight">or</span> a shuttle from the airport.
+            </div>
+            
+            <h3>3. Independent Clauses (Complete Sentences)</h3>
+            <div class="example-box">
+                The sun was setting, <span class="highlight">and</span> the sky turned orange.
+            </div>
+            
+            <div class="rule-box">
+                <strong>Important:</strong> When joining two independent clauses, use a comma before the FANBOY.
+            </div>
+            
+            <div class="controls">
+                <button onclick="prevSlide()">← Back</button>
+                <button onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 4: Parallel Structure -->
+        <div class="slide">
+            <h2>Parallel Structure</h2>
+            <h3>Making Coordination Sound Professional</h3>
+            
+            <p><strong>Parallelism:</strong> Coordinated elements must share the same grammatical form.</p>
+            
+            <div class="example-box correct">
+                <strong>PARALLEL:</strong> She likes reading, writing, and editing.
+            </div>
+            
+            <div class="example-box incorrect">
+                <strong>NOT PARALLEL:</strong> She likes reading, to write, and editing.
+            </div>
+            
+            <h3>More Parallel Structure Examples:</h3>
+            <div class="example-box correct">
+                <strong>PARALLEL (all adjectives):</strong> The professor is known for being clear, humorous, and patient.
+            </div>
+            
+            <div class="example-box incorrect">
+                <strong>NOT PARALLEL (mixed forms):</strong> The professor is known for clarity, being humorous, and patience.
+            </div>
+            
+            <div class="controls">
+                <button onclick="prevSlide()">← Back</button>
+                <button onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 5: Why Parallel Structure Matters -->
+        <div class="slide">
+            <h2>Why Parallel Structure Matters</h2>
+            
+            <h3>It Affects How Your Writing Sounds:</h3>
+            
+            <div class="example-box incorrect">
+                <strong>AWKWARD:</strong> The goals are to increase sales, improving customer service, and we should reduce costs.
+            </div>
+            
+            <div class="example-box correct">
+                <strong>SMOOTH:</strong> The goals are to increase sales, to improve customer service, and to reduce costs.<br>
+                OR: The goals are increasing sales, improving customer service, and reducing costs.
+            </div>
+            
+            <h3>Why Readers Notice:</h3>
+            <ul>
+                <li>Sounds cleaner and more professional</li>
+                <li>Easier for the brain to process</li>
+                <li>Creates rhythm and flow</li>
+                <li>Strengthens your credibility as a writer</li>
+            </ul>
+            
+            <div class="key-point">
+                Readers can <strong>feel</strong> when something isn't parallel—even if they can't explain why it sounds wrong.
+            </div>
+            
+            <div class="controls">
+                <button onclick="prevSlide()">← Back</button>
+                <button onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 6: What is Subordination? -->
+        <div class="slide">
+            <h2>What is Subordination?</h2>
+            
+            <p><strong>Subordination</strong> makes one idea dependent on another, creating a <span class="emphasis">hierarchy</span> of importance.</p>
+            
+            <h3>Key Difference:</h3>
+            <table class="comparison-table">
+                <tr>
+                    <th>Coordination</th>
+                    <th>Subordination</th>
+                </tr>
+                <tr>
+                    <td>Ideas are equal</td>
+                    <td>One idea is more important</td>
+                </tr>
+                <tr>
+                    <td>Both parts can stand alone</td>
+                    <td>One part depends on the other</td>
+                </tr>
+                <tr>
+                    <td>Feels balanced</td>
+                    <td>Shows relationships (cause, time, condition)</td>
+                </tr>
+            </table>
+            
+            <div class="key-point">
+                <strong>Writer's Power:</strong> Subordination lets you decide what deserves center stage.
+            </div>
+            
+            <div class="controls">
+                <button onclick="prevSlide()">← Back</button>
+                <button onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 7: Subordinating Conjunctions -->
+        <div class="slide">
+            <h2>Common Subordinating Conjunctions</h2>
+            
+            <div class="two-column">
+                <div class="column">
+                    <h4>Time</h4>
+                    <ul>
+                        <li>when</li>
+                        <li>while</li>
+                        <li>after</li>
+                        <li>before</li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h4>Cause</h4>
+                    <ul>
+                        <li>because</li>
+                        <li>since</li>
+                        <li>as</li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h4>Condition</h4>
+                    <ul>
+                        <li>if</li>
+                        <li>unless</li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h4>Contrast</h4>
+                    <ul>
+                        <li>although</li>
+                        <li>though</li>
+                        <li>while</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="rule-box">
+                <strong>Each word signals a specific relationship:</strong> Choose carefully because the subordinator you pick changes the meaning!
+            </div>
+            
+            <div class="controls">
+                <button onclick="prevSlide()">← Back</button>
+                <button onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 8: Subordination Examples -->
+        <div class="slide">
+            <h2>Subordination in Action</h2>
+            
+            <h3>Dependent Clause First (use comma)</h3>
+            <div class="example-box">
+                <span class="highlight">Because it was raining,</span> we stayed inside.
+            </div>
+            
+            <h3>Independent Clause First (no comma needed)</h3>
+            <div class="example-box">
+                We stayed inside <span class="highlight">because it was raining.</span>
+            </div>
+            
+            <div class="rule-box">
+                <strong>Comma Rule:</strong> When the dependent clause comes FIRST, use a comma. When it comes SECOND, no comma is needed.
+            </div>
+            
+            <h3>More Examples:</h3>
+            <div class="example-box">
+                <span class="highlight">Although she studied hard,</span> she was nervous about the test.
+            </div>
+            
+            <div class="example-box">
+                I'll go to the gym <span class="highlight">if I finish my work early.</span>
+            </div>
+            
+            <div class="controls">
+                <button onclick="prevSlide()">← Back</button>
+                <button onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 9: Understanding the Nuance -->
+        <div class="slide">
+            <h2>Understanding the Nuance</h2>
+            <h3>When Both Coordination and Subordination Work</h3>
+            
+            <p>Sometimes both structures are grammatically correct, but they mean slightly different things:</p>
+            
+            <div class="example-box">
+                <strong>Coordination (with "so"):</strong> The sun was shining, so we went to the beach.<br>
+                <em>Meaning: Both facts are presented equally; "so" shows result but doesn't emphasize cause as strongly.</em>
+            </div>
+            
+            <div class="example-box">
+                <strong>Subordination (with "because"):</strong> Because the sun was shining, we went to the beach.<br>
+                <em>Meaning: The cause (shining sun) is clearly the reason for the effect (going to beach).</em>
+            </div>
+            
+            <div class="key-point">
+                <strong>The Difference:</strong><br>
+                • <strong>"So"</strong> (coordination) = presents both ideas as equally important facts, shows a result<br>
+                • <strong>"Because"</strong> (subordination) = explicitly shows cause and effect, emphasizes the reasoning
+            </div>
+            
+            <p style="margin-top: 20px;">Choose based on what you want to emphasize!</p>
+            
+            <div class="controls">
+                <button onclick="prevSlide()">← Back</button>
+                <button onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 10: Common Mistakes -->
+        <div class="slide">
+            <h2>Common Mistakes to Avoid</h2>
+            
+            <h3>1. Comma Splices</h3>
+            <div class="example-box incorrect">
+                <strong>WRONG:</strong> I love pizza, it's delicious.
+            </div>
+            <div class="example-box correct">
+                <strong>RIGHT:</strong> I love pizza, <span class="highlight">and</span> it's delicious.
+            </div>
+            
+            <h3>2. Sentence Fragments</h3>
+            <div class="example-box incorrect">
+                <strong>WRONG:</strong> Because I was tired.
+            </div>
+            <div class="example-box correct">
+                <strong>RIGHT:</strong> Because I was tired, I went to bed early.
+            </div>
+            
+            <h3>3. Missing Commas</h3>
+            <div class="example-box incorrect">
+                <strong>WRONG:</strong> Although the test was hard we all passed.
+            </div>
+            <div class="example-box correct">
+                <strong>RIGHT:</strong> Although the test was hard, we all passed.
+            </div>
+            
+            <div class="controls">
+                <button onclick="prevSlide()">← Back</button>
+                <button onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 11: More Mistakes -->
+        <div class="slide">
+            <h2>More Common Mistakes</h2>
+            
+            <h3>4. Breaking Parallelism</h3>
+            <div class="example-box incorrect">
+                <strong>WRONG:</strong> She likes reading, to write, and editing.
+            </div>
+            <div class="example-box correct">
+                <strong>RIGHT:</strong> She likes reading, writing, and editing.
+            </div>
+            
+            <h3>5. Overusing Coordination</h3>
+            <div class="example-box incorrect">
+                <strong>WRONG:</strong> I woke up and I was tired and I drank coffee and I felt better.
+            </div>
+            <div class="example-box correct">
+                <strong>RIGHT:</strong> Although I woke up tired, I drank coffee and felt better.
+            </div>
+            
+            <div class="key-point">
+                <strong>Remember:</strong> Punctuation reflects structure—it doesn't create it. You need the right conjunction, not just commas!
+            </div>
+            
+            <div class="controls">
+                <button onclick="prevSlide()">← Back</button>
+                <button onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 12: Quick Review -->
+        <div class="slide">
+            <h2>Quick Review</h2>
+            
+            <h3>Coordination (FANBOYS)</h3>
+            <ul>
+                <li>Joins <strong>equal</strong> ideas</li>
+                <li>Use comma before FANBOY when joining independent clauses</li>
+                <li>Keep parallel structure!</li>
+            </ul>
+            
+            <h3>Subordination</h3>
+            <ul>
+                <li>Creates <strong>hierarchy</strong> of ideas</li>
+                <li>Shows relationships: cause, time, condition, contrast</li>
+                <li>Comma when dependent clause comes first</li>
+            </ul>
+            
+            <div class="key-point">
+                <strong>Choose based on your purpose:</strong> What relationship between ideas do you want to show? What do you want to emphasize?
+            </div>
+            
+            <div class="controls">
+                <button onclick="prevSlide()">← Back</button>
+                <button onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 13: Interactive Activity 1 -->
+        <div class="slide">
+            <div class="interactive-section">
+                <h2 style="color: white; border-bottom: 3px solid white;">Activity 1: Identify It!</h2>
+                
+                <div class="activity-box">
+                    <p style="color: white; font-size: 1.2em;"><strong>For each sentence, identify if it uses COORDINATION or SUBORDINATION:</strong></p>
+                </div>
+                
+                <div style="background: white; padding: 30px; border-radius: 10px; margin-top: 20px;">
+                    <ol style="font-size: 1.2em; line-height: 2;">
+                        <li>I wanted to go hiking, but it started raining.</li>
+                        <li>When the movie ended, everyone applauded.</li>
+                        <li>She studies hard, so she gets good grades.</li>
+                        <li>Although he was nervous, he gave a great presentation.</li>
+                        <li>The team practiced daily, and they won the championship.</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="controls">
+                <button onclick="prevSlide()">← Back</button>
+                <button onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 14: Answers 1 -->
+        <div class="slide">
+            <h2>Activity 1: Answers</h2>
+            
+            <ol style="font-size: 1.2em; line-height: 2.2;">
+                <li>I wanted to go hiking, <strong>but</strong> it started raining. → <span class="highlight">COORDINATION</span></li>
+                
+                <li><strong>When</strong> the movie ended, everyone applauded. → <span class="highlight">SUBORDINATION</span></li>
+                
+                <li>She studies hard, <strong>so</strong> she gets good grades. → <span class="highlight">COORDINATION</span></li>
+                
+                <li><strong>Although</strong> he was nervous, he gave a great presentation. → <span class="highlight">SUBORDINATION</span></li>
+                
+                <li>The team practiced daily, <strong>and</strong> they won the championship. → <span class="highlight">COORDINATION</span></li>
+            </ol>
+            
+            <div class="controls">
+                <button onclick="prevSlide()">← Back</button>
+                <button onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 15: Interactive Activity 2 -->
+        <div class="slide">
+            <div class="interactive-section">
+                <h2 style="color: white; border-bottom: 3px solid white;">Activity 2: Fix the Errors!</h2>
+                
+                <div class="activity-box">
+                    <p style="color: white; font-size: 1.2em;"><strong>Each sentence has an error. Can you spot it and fix it?</strong></p>
+                </div>
+                
+                <div style="background: white; padding: 30px; border-radius: 10px; margin-top: 20px;">
+                    <ol style="font-size: 1.2em; line-height: 2.2;">
+                        <li>I love reading, it helps me relax.</li>
+                        <li>Because she was sick.</li>
+                        <li>Although the test was hard we all passed.</li>
+                        <li>She enjoys swimming, running, and to bike.</li>
+                        <li>The concert was canceled the singer was ill.</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="controls">
+                <button onclick="prevSlide()">← Back</button>
+                <button onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 16: Answers 2 -->
+        <div class="slide">
+            <h2>Activity 2: Answers</h2>
+            
+            <div style="font-size: 1.1em; line-height: 2;">
+                <p><strong>1.</strong> I love reading, it helps me relax. <span class="emphasis">(Comma splice)</span></p>
+                <div class="example-box correct">
+                    <strong>FIX:</strong> I love reading, <span class="highlight">and</span> it helps me relax.<br>
+                    OR: I love reading <span class="highlight">because</span> it helps me relax.
+                </div>
+                
+                <p><strong>2.</strong> Because she was sick. <span class="emphasis">(Fragment)</span></p>
+                <div class="example-box correct">
+                    <strong>FIX:</strong> Because she was sick, <span class="highlight">she stayed home.</span>
+                </div>
+                
+                <p><strong>3.</strong> Although the test was hard we all passed. <span class="emphasis">(Missing comma)</span></p>
+                <div class="example-box correct">
+                    <strong>FIX:</strong> Although the test was hard<span class="highlight">,</span> we all passed.
+                </div>
+                
+                <p><strong>4.</strong> She enjoys swimming, running, and to bike. <span class="emphasis">(Not parallel)</span></p>
+                <div class="example-box correct">
+                    <strong>FIX:</strong> She enjoys swimming, running, and <span class="highlight">biking.</span>
+                </div>
+                
+                <p><strong>5.</strong> The concert was canceled the singer was ill. <span class="emphasis">(Run-on)</span></p>
+                <div class="example-box correct">
+                    <strong>FIX:</strong> The concert was canceled <span class="highlight">because</span> the singer was ill.
+                </div>
+            </div>
+            
+            <div class="controls">
+                <button onclick="prevSlide()">← Back</button>
+                <button onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 17: Interactive Activity 3 -->
+        <div class="slide">
+            <div class="interactive-section">
+                <h2 style="color: white; border-bottom: 3px solid white;">Activity 3: Your Turn!</h2>
+                
+                <div class="activity-box">
+                    <p style="color: white; font-size: 1.2em;"><strong>Combine these simple sentences. You choose: use COORDINATION or SUBORDINATION!</strong></p>
+                </div>
+                
+                <div style="background: white; padding: 30px; border-radius: 10px; margin-top: 20px;">
+                    <div style="font-size: 1.2em; line-height: 2.5;">
+                        <p><strong>1.</strong> The sun was shining. We decided to go to the beach.</p>
+                        
+                        <p><strong>2.</strong> I studied all night. I still failed the test.</p>
+                        
+                        <p><strong>3.</strong> She loves coffee. She drinks it every morning.</p>
+                        
+                        <p><strong>4.</strong> The power went out. We lit candles.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="controls">
+                <button onclick="prevSlide()">← Back</button>
+                <button onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 18: Sample Answers 3 -->
+        <div class="slide">
+            <h2>Activity 3: Sample Answers</h2>
+            <p style="font-size: 1.1em; margin-bottom: 20px;"><em>Many answers are possible! Here are some good options:</em></p>
+            
+            <div style="font-size: 1.1em;">
+                <p><strong>1.</strong> The sun was shining. We decided to go to the beach.</p>
+                <div class="example-box">
+                    The sun was shining, <span class="highlight">and</span> we decided to go to the beach. (coordination - both facts equal)<br>
+                    <span class="highlight">Because</span> the sun was shining, we decided to go to the beach. (subordination - shows cause)
+                </div>
+                <p><em>Note: "So" would also work for coordination and shows the result, but doesn't emphasize cause/effect as strongly as "because."</em></p>
+                
+                <p><strong>2.</strong> I studied all night. I still failed the test.</p>
+                <div class="example-box">
+                    I studied all night, <span class="highlight">but</span> I still failed the test. (coordination - contrast)<br>
+                    <span class="highlight">Although</span> I studied all night, I still failed the test. (subordination - emphasizes the surprising result)
+                </div>
+                
+                <p><strong>3.</strong> She loves coffee. She drinks it every morning.</p>
+                <div class="example-box">
+                    She loves coffee, <span class="highlight">and</span> she drinks it every morning. (coordination - two equal facts)<br>
+                    She drinks coffee every morning <span class="highlight">because</span> she loves it. (subordination - shows reason)
+                </div>
+                
+                <p><strong>4.</strong> The power went out. We lit candles.</p>
+                <div class="example-box">
+                    The power went out, <span class="highlight">so</span> we lit candles. (coordination - shows result)<br>
+                    <span class="highlight">When</span> the power went out, we lit candles. (subordination - shows time/sequence)
+                </div>
+            </div>
+            
+            <div class="controls">
+                <button onclick="prevSlide()">← Back</button>
+                <button onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 19: Final Takeaways -->
+        <div class="slide">
+            <h2>Key Takeaways</h2>
+            
+            <ol style="font-size: 1.3em; line-height: 2.2;">
+                <li><strong>Coordination (FANBOYS)</strong> joins equal ideas—use it when both ideas matter equally.</li>
+                
+                <li><strong>Subordination</strong> creates hierarchy—use it to show cause/effect, time, conditions, or contrasts.</li>
+                
+                <li><strong>Parallel structure</strong> makes your writing sound professional and polished.</li>
+                
+                <li><strong>Comma rules matter:</strong> Use commas correctly with both coordination and subordination.</li>
+                
+                <li><strong>Choose purposefully:</strong> The structure you pick shapes how readers understand your ideas.</li>
+            </ol>
+            
+            <blockquote style="margin-top: 50px; font-size: 1.3em;">
+                "Good writing is about structure as much as content."
+            </blockquote>
+            
+            <div class="controls">
+                <button onclick="prevSlide()">← Back</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                showSlide(currentSlide + 1);
+            }
+        }
+        
+        function prevSlide() {
+            if (currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            }
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+    </script>
+</body>
+</html>
